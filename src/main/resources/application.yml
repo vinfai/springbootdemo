@@ -1,0 +1,7 @@
+server:
+  port: 9001
+spring:
+  cache:
+    cache-names: cacheDemo
+    guava:
+      spec: maximumSize=500,expireAfterWrite=360m

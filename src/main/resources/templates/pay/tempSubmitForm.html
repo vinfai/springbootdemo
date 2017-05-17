@@ -1,0 +1,19 @@
+<html  xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<body>
+	<form name="submitForm" th:action="${payUrl}" th:method="${requestMethod}">
+		<!-- map 迭代 -->
+		<table cellspacing="5" cellpadding="5" th:each="myparam:${payParams}">
+			<tr>
+				<td align="right" th:text="${myparam.key}+':'"></td>
+				<td align="left"><textarea cols="100" rows="3" th:name="${myparam.key}" th:text="${myparam.value}"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" value="提交" /></td>
+			</tr>
+		</table>
+	</form>
+</body>
+<script type="text/javascript" th:if="${pause ne true}">
+	document.forms[0].submit();
+</script>
+</html>

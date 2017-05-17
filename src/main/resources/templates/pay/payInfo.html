@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <title>pay info</title>
+</head>
+<body>
+    <form name="payForm" th:action="@{/pay/sumbitPayInfo}" method="post">
+        <table>
+            <tr>
+                <td>订单编号</td>
+                <td><input type="text" name="orderno"/><input type="button" value="生成订单" onclick="createOrder()"/></td>
+            </tr>
+            <tr>
+                <td>订单类型</td>
+                <td><input type="text" name="orderType" value="MOVIE"/></td>
+            </tr>
+            <tr>
+                <td>totalAmount</td>
+                <td><input type="text" name="totalAmount" value=""/></td>
+            </tr>
+            <tr>
+                <td>费用(分)</td>
+                <td><input type="text" name="fee" value="100"/><input type="button" value="提交" onclick="checkOrder()"/></td>
+            </tr>
+            <tr>
+                <td>gatewayCode</td>
+                <td><input type="text" name="gatewayCode" value="unionWapPay"/></td>
+            </tr>
+            <tr>
+                <td>merchantCode</td>
+                <td><input type="text" name="merchantCode" value="unionwappay"/></td>
+            </tr>
+            <tr>
+                <td>paybank</td>
+                <td><input type="text" name="paybank" value=""/></td>
+            </tr>
+            <!--<tr>
+                <td>网关/商户标识</td>
+                <td>
+                    <select id="gateway" name="gateway" onchange="gatewayChange()" onclick="gatewayChange()">
+                        <option value="">-</option>
+                        #foreach($gateway in $gateways)
+                        <option value="$gateway.gatewayCode">$gateway.gatewayCode - $gateway.gatewayName</option>
+                        #end
+                    </select>-
+                    <select id="merchantCode" name="merchantCode">
+                        <option value="">-</option>
+                    </select>
+                </td>
+            </tr>-->
+            <tr>
+                <td>手机号</td>
+                <td><input type="text" name="mobile" value="15821656016"/></td>
+            </tr>
+            <tr>
+                <td>数量</td>
+                <td><input type="text" name="quantity" value="1"/></td>
+            </tr>
+            <tr>
+                <td>ticketNum</td>
+                <td><input type="text" name="ticketNum" value="1"/></td>
+            </tr>
+
+
+            <tr>
+                <td>创建时间</td>
+                <td><input type="text" name="createtime"/></td>
+            </tr>
+            <tr>
+                <td>更新时间</td>
+                <td><input type="text" name="updatetime"/></td>
+            </tr>
+            <tr>
+                <td>有效时间</td>
+                <td><input type="text" name="validtime"/></td>
+            </tr>
+
+
+            <tr>
+                <td>客户端IP</td>
+                <td><input type="text" name="clientIp" value="127.0.0.1"/></td>
+            </tr>
+            <tr>
+                <td>商户名称</td>
+                <td><input type="text" name="subject" value="" size="46"/></td>
+            </tr>
+            <tr>
+                <td>订单描述</td>
+                <td><input type="text" name="description" value="" size="46"/></td>
+            </tr>
+            <tr>
+                <td>memberId</td>
+                <td><input type="text" name="memberid" value="1" size="46"/></td>
+            </tr>
+            <tr>
+                <td>partnerId</td>
+                <td><input type="text" name="partnerId" value="1" size="46"/></td>
+            </tr>
+            <tr>
+                <td>reqSource</td>
+                <td><input type="text" name="reqSource" value="APP" size="46"/></td>
+            </tr>
+            <tr>
+                <td>discount</td>
+                <td><input type="text" name="discount" value="0" size="46"/></td>
+            </tr>
+            <tr>
+                <td>cardNo</td>
+                <td><input type="text" name="cardNo" value="" size="46"/></td>
+            </tr>
+            <tr>
+                <td>returnUrl</td>
+                <td><input type="text" name="returnUrl" value="http://returnUrl" size="46"/></td>
+            </tr>
+            <tr>
+                <td>notifyUrl</td>
+                <td><input type="text" name="notifyUrl" value="http://notifyUrl" size="46"/></td>
+            </tr>
+            <tr>
+                <td>url</td>
+                <td><input type="text" name="url" value="http://localhost/weipiao/mobile/order/selectPayMethod.xhtml" size="46"/></td>
+            </tr>
+            <tr>
+                <td>其他信息</td>
+                <td><textarea rows="8" cols="50" name="otherinfo">{"citycode":"310000","partnerid":"1","memberid":"46485711","discount":"0"}</textarea></td>
+            </tr>
+            <tr>
+                <td>暂停</td>
+                <td><input type="checkbox" name="pause" value="true" checked="checked"/></td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>
+
+<script type="text/javascript">
+    function getDateStr(time){
+        var year = time.getFullYear();
+        var month = time.getMonth()+1;
+        var day = time.getDate();
+
+        var hour = time.getHours();
+        var min = time.getMinutes();
+        var sec = time.getSeconds();
+
+        return year+'-'+month+'-'+day+' '+hour+':'+min+':'+sec
+    }
+
+    function createOrder(){
+        var time = new Date();
+        var payForm = document.forms[0];
+
+        payForm.orderno.value= 'Test'+(getDateStr(time).replace(/\-/g,'').replace(/\:/g,'').replace(' ',''));
+
+        payForm.createtime.value=getDateStr(time);
+        payForm.updatetime.value=getDateStr(time);
+        time.setMinutes(time.getMinutes()+15);
+        payForm.validtime.value=getDateStr(time);
+        payForm.subject.value=getDateStr(time)+"前付款格瓦拉测试电影票";
+        payForm.description.value="Gewa订单号：" + payForm.orderno.value + "请在" + payForm.validtime.value + "前付款";
+    }
+
+    function checkOrder() {
+        this.payForm.submit();
+    }
+</script>
